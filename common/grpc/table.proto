@@ -1,0 +1,17 @@
+
+syntax = "proto3";
+
+option go_package = "./oz";
+option java_multiple_files = true;
+
+package oz;
+
+import "common.proto";
+
+message Template {
+	string id = 1;
+	string group_id = 2;
+	string reward_id = 3;
+	int64 count = 4;
+	TemplateEnum.T enum = 5;
+}

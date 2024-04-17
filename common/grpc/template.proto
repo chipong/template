@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = "./oz";
+option java_multiple_files = true;
+package oz;
+import "common.proto";
+
+// endpoint: template/get
+message GetTemplateReq {
+	string uid = 1 [json_name = "uid"];
+}
+
+message GetTemplateAns {
+	int32 err_code = 1 [json_name = "err_code"];								// 애러 코드
+	string err_msg = 2  [json_name = "err_msg"];								// 애러 메시지
+
+	repeated OZTemplate templates = 3 [json_name = "templates"];
+}
+
+// endpoint: template/set
+message SetTemplateReq {
+	string uid = 1 [json_name = "uid"];
+
+	string id = 2 [json_name = "id"];
+	int64 count = 3 [json_name = "count"];
+}
+
+message SetTemplateAns {
+	int32 err_code = 1 [json_name = "err_code"];								// 애러 코드
+	string err_msg = 2  [json_name = "err_msg"];								// 애러 메시지
+
+	OZTemplate template = 3 [json_name = "template"];
+}

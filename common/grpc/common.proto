@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "./oz";
+option java_multiple_files = true;
+
+package oz;
+
+// Leaderboard
+message LeaderboardType {
+    enum T {
+        NONE = 0;
+        STAGE = 1;                  // 클리어 스테이지 수
+        CHARACTER = 2;              // 보유 캐릭터 수
+
+		MAX = 3;
+    }
+}
+
+message LeaderboardUpdateStatus {
+	enum T {
+		NONE = 0;
+		NEW = 1;
+		CHANGED = 2;
+		UNCHANGED = 3;
+
+		MAX = 4;
+	}
+}
+
+message OZRanker {
+    string uid = 1;					// 유저 아이디
+    int64 rank = 2;					// 랭크
+    int64 score = 3;				// 점수
+
+	int32 update_at = 4;			// 갱신 시간
+}
+
+message TemplateEnum {
+	enum T {
+		NONE = 0;
+		FIRST = 1;
+		SECOND = 2;
+
+		MAX = 3;
+	}
+}
+
+message OZTemplate {
+	string id = 1 [json_name = "id"];
+	int64 count = 2 [json_name = "count"];
+}
