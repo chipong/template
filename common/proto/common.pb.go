@@ -4,7 +4,7 @@
 // 	protoc        v3.13.0
 // source: common.proto
 
-package oz
+package proto
 
 import (
 	proto "github.com/golang/protobuf/proto"
@@ -261,7 +261,7 @@ func (*LeaderboardUpdateStatus) Descriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{1}
 }
 
-type OZRanker struct {
+type Ranker struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -272,8 +272,8 @@ type OZRanker struct {
 	UpdateAt int32  `protobuf:"varint,4,opt,name=update_at,json=updateAt,proto3" json:"update_at,omitempty"` // 갱신 시간
 }
 
-func (x *OZRanker) Reset() {
-	*x = OZRanker{}
+func (x *Ranker) Reset() {
+	*x = Ranker{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_common_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -281,13 +281,13 @@ func (x *OZRanker) Reset() {
 	}
 }
 
-func (x *OZRanker) String() string {
+func (x *Ranker) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*OZRanker) ProtoMessage() {}
+func (*Ranker) ProtoMessage() {}
 
-func (x *OZRanker) ProtoReflect() protoreflect.Message {
+func (x *Ranker) ProtoReflect() protoreflect.Message {
 	mi := &file_common_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -299,33 +299,33 @@ func (x *OZRanker) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use OZRanker.ProtoReflect.Descriptor instead.
-func (*OZRanker) Descriptor() ([]byte, []int) {
+// Deprecated: Use Ranker.ProtoReflect.Descriptor instead.
+func (*Ranker) Descriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *OZRanker) GetUid() string {
+func (x *Ranker) GetUid() string {
 	if x != nil {
 		return x.Uid
 	}
 	return ""
 }
 
-func (x *OZRanker) GetRank() int64 {
+func (x *Ranker) GetRank() int64 {
 	if x != nil {
 		return x.Rank
 	}
 	return 0
 }
 
-func (x *OZRanker) GetScore() int64 {
+func (x *Ranker) GetScore() int64 {
 	if x != nil {
 		return x.Score
 	}
 	return 0
 }
 
-func (x *OZRanker) GetUpdateAt() int32 {
+func (x *Ranker) GetUpdateAt() int32 {
 	if x != nil {
 		return x.UpdateAt
 	}
@@ -473,11 +473,11 @@ var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_common_proto_goTypes = []interface{}{
 	(LeaderboardType_T)(0),          // 0: oz.LeaderboardType.T
 	(LeaderboardUpdateStatus_T)(0),  // 1: oz.LeaderboardUpdateStatus.T
-	(TemplateEnum_T)(0),             // 2: oz.TemplateEnum.T
+	(TemplateEnum_T)(0),             // 2: proto.TemplateEnum.T
 	(*LeaderboardType)(nil),         // 3: oz.LeaderboardType
 	(*LeaderboardUpdateStatus)(nil), // 4: oz.LeaderboardUpdateStatus
-	(*OZRanker)(nil),                // 5: oz.OZRanker
-	(*TemplateEnum)(nil),            // 6: oz.TemplateEnum
+	(*Ranker)(nil),                // 5: oz.Ranker
+	(*TemplateEnum)(nil),            // 6: proto.TemplateEnum
 	(*OZTemplate)(nil),              // 7: oz.OZTemplate
 }
 var file_common_proto_depIdxs = []int32{
@@ -519,7 +519,7 @@ func file_common_proto_init() {
 			}
 		}
 		file_common_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OZRanker); i {
+			switch v := v.(*Ranker); i {
 			case 0:
 				return &v.state
 			case 1:

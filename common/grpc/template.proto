@@ -1,7 +1,7 @@
 syntax = "proto3";
-option go_package = "./oz";
+option go_package = "./proto";
 option java_multiple_files = true;
-package oz;
+package proto;
 import "common.proto";
 
 // endpoint: template/get

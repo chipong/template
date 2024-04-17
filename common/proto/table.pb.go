@@ -4,7 +4,7 @@
 // 	protoc        v3.13.0
 // source: table.proto
 
-package oz
+package proto
 
 import (
 	proto "github.com/golang/protobuf/proto"
@@ -34,7 +34,7 @@ type Template struct {
 	GroupId  string         `protobuf:"bytes,2,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
 	RewardId string         `protobuf:"bytes,3,opt,name=reward_id,json=rewardId,proto3" json:"reward_id,omitempty"`
 	Count    int64          `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
-	Enum     TemplateEnum_T `protobuf:"varint,5,opt,name=enum,proto3,enum=oz.TemplateEnum_T" json:"enum,omitempty"`
+	Enum     TemplateEnum_T `protobuf:"varint,5,opt,name=enum,proto3,enum=proto.TemplateEnum_T" json:"enum,omitempty"`
 }
 
 func (x *Template) Reset() {
@@ -136,11 +136,11 @@ func file_table_proto_rawDescGZIP() []byte {
 
 var file_table_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_table_proto_goTypes = []interface{}{
-	(*Template)(nil),    // 0: oz.Template
-	(TemplateEnum_T)(0), // 1: oz.TemplateEnum.T
+	(*Template)(nil),    // 0: proto.Template
+	(TemplateEnum_T)(0), // 1: proto.TemplateEnum.T
 }
 var file_table_proto_depIdxs = []int32{
-	1, // 0: oz.Template.enum:type_name -> oz.TemplateEnum.T
+	1, // 0: proto.Template.enum:type_name -> proto.TemplateEnum.T
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

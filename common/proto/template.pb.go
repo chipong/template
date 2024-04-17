@@ -4,7 +4,7 @@
 // 	protoc        v3.13.0
 // source: template.proto
 
-package oz
+package proto
 
 import (
 	proto "github.com/golang/protobuf/proto"

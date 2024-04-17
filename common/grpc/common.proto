@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-option go_package = "./oz";
+option go_package = "./proto";
 option java_multiple_files = true;
 
-package oz;
+package proto;
 
 // Leaderboard
 message LeaderboardType {
@@ -27,7 +27,7 @@ message LeaderboardUpdateStatus {
 	}
 }
 
-message OZRanker {
+message Ranker {
     string uid = 1;					// 유저 아이디
     int64 rank = 2;					// 랭크
     int64 score = 3;				// 점수

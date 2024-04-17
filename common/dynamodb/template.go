@@ -11,7 +11,7 @@ import (
 	"github.com/chipong/template/common/proto"
 )
 
-func GetTemplates(ctx context.Context, pk string) ([]*oz.OZTemplate, error) {
+func GetTemplates(ctx context.Context, pk string) ([]*proto.OZTemplate, error) {
 	query := `SELECT * FROM "game-oz" WHERE "PK" = ? AND BEGINS_WITH("SK", 'TEMPLATE#')`
 	param := dynamodb.ExecuteStatementInput{
 		Statement: aws.String(query),
@@ -25,9 +25,9 @@ func GetTemplates(ctx context.Context, pk string) ([]*oz.OZTemplate, error) {
 		return nil, err
 	}
 
-	templates := []*oz.OZTemplate{}
+	templates := []*proto.OZTemplate{}
 	for _, v := range result.Items {
-		template := &oz.OZTemplate{}
+		template := &proto.OZTemplate{}
 		sk := v["SK"].(*types.AttributeValueMemberS).Value
 		UnmarshalMap(v, template)
 		template.Id = sk[len("TEMPLATE#"):]
@@ -36,7 +36,7 @@ func GetTemplates(ctx context.Context, pk string) ([]*oz.OZTemplate, error) {
 	return templates, nil
 }
 
-func PutTemplateTx(pk string, template *oz.OZTemplate) types.ParameterizedStatement {
+func PutTemplateTx(pk string, template *proto.OZTemplate) types.ParameterizedStatement {
 	query := `INSERT INTO "game-oz"
 	VALUE {
 		'PK':?, 

@@ -16,7 +16,7 @@ const (
 )
 /*
 // @deprecated
-func UpdateRanker(c *gin.Context, addr string, leaderboardType oz.LeaderboardType_T, score int64) (*oz.OZRanker, error) {
+func UpdateRanker(c *gin.Context, addr string, leaderboardType proto.LeaderboardType_T, score int64) (*proto.Ranker, error) {
 	uid, err := util.GetHeaderUid(c)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func UpdateRanker(c *gin.Context, addr string, leaderboardType oz.LeaderboardTyp
 		return nil, err
 	}
 
-	ans := &oz.RankUpdateAns{}
+	ans := &proto.RankUpdateAns{}
 	err = json.Unmarshal(temp, ans)
 
 	log.Printf("res : %v\n", res)
@@ -46,8 +46,8 @@ func UpdateRanker(c *gin.Context, addr string, leaderboardType oz.LeaderboardTyp
 }
 
 // @deprecated
-func RankUpdateRequestFactory(c *gin.Context, uid string, leaderboardType oz.LeaderboardType_T, score int64, at int32) (*gin.Context, error) {
-	reqBody := &oz.RankUpdateReq{
+func RankUpdateRequestFactory(c *gin.Context, uid string, leaderboardType proto.LeaderboardType_T, score int64, at int32) (*gin.Context, error) {
+	reqBody := &proto.RankUpdateReq{
 		LeaderboardType: 	leaderboardType,
 		Score: 				score,
 	}
@@ -108,26 +108,26 @@ func InnerRouter(uid string, addr string, c *gin.Context, withSend bool) (map[st
 }
 */
 
-func UpdateScore(uid string, leaderboard_type oz.LeaderboardType_T, score int64) (*oz.OZRanker, oz.LeaderboardUpdateStatus_T, error) {
-	status := oz.LeaderboardUpdateStatus_NONE
+func UpdateScore(uid string, leaderboard_type proto.LeaderboardType_T, score int64) (*proto.Ranker, proto.LeaderboardUpdateStatus_T, error) {
+	status := proto.LeaderboardUpdateStatus_NONE
 
-	leaderboardType := oz.LeaderboardType_T(oz.LeaderboardType_T_value[oz.LeaderboardType_T_name[int32(leaderboard_type)]])
-	if leaderboardType == oz.LeaderboardType_NONE || leaderboardType == oz.LeaderboardType_MAX {
+	leaderboardType := proto.LeaderboardType_T(proto.LeaderboardType_T_value[proto.LeaderboardType_T_name[int32(leaderboard_type)]])
+	if leaderboardType == proto.LeaderboardType_NONE || leaderboardType == proto.LeaderboardType_MAX {
 		log.Println("LeaderboardType incorrect(NONE or MAX)")
 		return nil, status, fmt.Errorf("LeaderboardType incorrect(NONE or MAX)")
 	}
 
 	myRanker, _ := redisCache.GetTargetRanker(leaderboardType.String(), uid)
 	
-	status = oz.LeaderboardUpdateStatus_CHANGED
+	status = proto.LeaderboardUpdateStatus_CHANGED
 	if myRanker == nil {
-		status = oz.LeaderboardUpdateStatus_NEW
+		status = proto.LeaderboardUpdateStatus_NEW
 	} else {
-		prevMyRanker := &oz.OZRanker{}
+		prevMyRanker := &proto.Ranker{}
 		copier.CopyWithOption(prevMyRanker, myRanker, copier.Option{DeepCopy: true})
 
 		if score == myRanker.Score {
-			status = oz.LeaderboardUpdateStatus_UNCHANGED
+			status = proto.LeaderboardUpdateStatus_UNCHANGED
 			return nil, status, nil
 		}
 	}
@@ -136,12 +136,12 @@ func UpdateScore(uid string, leaderboard_type oz.LeaderboardType_T, score int64)
 	// TODO leaderboard_type 변경 필요
 	rank, err := redisCache.SetRanker(leaderboardType.String(), uid, score, at)
 	if err != nil {
-		log.Println(err, "failed set score", oz.LeaderboardType_STAGE.String(), uid)
-		return nil, oz.LeaderboardUpdateStatus_NONE, err
+		log.Println(err, "failed set score", proto.LeaderboardType_STAGE.String(), uid)
+		return nil, proto.LeaderboardUpdateStatus_NONE, err
 	}
 
 	if myRanker == nil {
-		myRanker = &oz.OZRanker{
+		myRanker = &proto.Ranker{
 			Uid: uid,
 			Rank: rank,
 			Score: score,

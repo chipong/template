@@ -35,7 +35,7 @@ func GetRank(leaderboardType, uid string) (int64, error) {
 	return result, nil
 }
 
-func GetTargetRanker(leaderboardType, uid string) (*oz.OZRanker, error) {
+func GetTargetRanker(leaderboardType, uid string) (*proto.Ranker, error) {
 	key := fmt.Sprintf("%s:leaderboard:%s", appName, leaderboardType)
 	targetRank, err := ZRank(key, DataTTL, uid)
 	if err != nil {
@@ -53,7 +53,7 @@ func GetTargetRanker(leaderboardType, uid string) (*oz.OZRanker, error) {
 	}
 	targetScore, _ := uncompactScore(int64(tempScore))
 
-	target := &oz.OZRanker{
+	target := &proto.Ranker{
 		Uid: 	uid,
 		Rank: 	targetRank,
 		Score: 	int64(targetScore),
@@ -62,14 +62,14 @@ func GetTargetRanker(leaderboardType, uid string) (*oz.OZRanker, error) {
 	return target, nil
 }
 
-func GetRankerList(leaderboardType, uid string, start, end int64) ([]*oz.OZRanker, error) {
+func GetRankerList(leaderboardType, uid string, start, end int64) ([]*proto.Ranker, error) {
 	key := fmt.Sprintf("%s:leaderboard:%s", appName, leaderboardType)
 	results, err := ZRange(key, DataTTL, (start - 1), (end - 1))
 	if err != nil {
 		return nil, err
 	}
 
-	ranks := make([]*oz.OZRanker, 0)
+	ranks := make([]*proto.Ranker, 0)
 	rankCount := start
 	for i := 0; i < len(results.([]interface{})); i += 2 {
 		score, err := strconv.Atoi(results.([]interface{})[i + 1].(string))
@@ -78,7 +78,7 @@ func GetRankerList(leaderboardType, uid string, start, end int64) ([]*oz.OZRanke
 		}
 
 		rankPoint, _ := uncompactScore(int64(score))
-		temp := &oz.OZRanker{
+		temp := &proto.Ranker{
 			Uid: results.([]interface{})[i].(string),
 			Rank: int64(rankCount),
 			Score: int64(rankPoint),
@@ -103,7 +103,7 @@ func GetRankerList(leaderboardType, uid string, start, end int64) ([]*oz.OZRanke
 	// }
 
 	// myScore, _ := uncompactScore(int64(tempScore))
-	// myInfo := &oz.OZRanker{
+	// myInfo := &proto.Ranker{
 	// 	Uid: uid,
 	// 	Rank: myRank,
 	// 	Score: int64(myScore),

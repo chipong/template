@@ -8,9 +8,9 @@ import (
 	"github.com/chipong/template/common/proto"
 )
 
-func GetTemplate(uid string) ([]*oz.OZTemplate, error) {
+func GetTemplate(uid string) ([]*proto.OZTemplate, error) {
 	key := fmt.Sprintf("%s:%s:template", appName, uid)
-	results, err := LRange(key, DataTTL, &oz.OZTemplate{})
+	results, err := LRange(key, DataTTL, &proto.OZTemplate{})
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +22,7 @@ func GetTemplate(uid string) ([]*oz.OZTemplate, error) {
 	return results, nil
 }
 
-func SetTemplate(uid string, templates []*oz.OZTemplate) error {
+func SetTemplate(uid string, templates []*proto.OZTemplate) error {
 	if len(templates) == 0 {
 		return nil
 	}

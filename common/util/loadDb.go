@@ -14,7 +14,7 @@ import (
 	"github.com/chipong/template/common/redisCache"
 )
 func LoadTemplate(ctx context.Context, cancel context.CancelFunc, checkFunc func(chan *common.ChErrCode),
-	uid string, templates *[]*oz.OZTemplate, cache bool) <-chan *common.ChErrCode {
+	uid string, templates *[]*proto.OZTemplate, cache bool) <-chan *common.ChErrCode {
 	job := func(ch chan *common.ChErrCode) {
 		var err error
 		*templates, err = redisCache.GetTemplate(uid)

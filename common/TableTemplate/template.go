@@ -22,14 +22,14 @@ const (
 )
 
 type TemplateData struct {
-	temp			map[string]*oz.Template
+	temp			map[string]*proto.Template
 	checkSumTemp	string
 	lock			*sync.RWMutex
 }
 
 func NewTemplateData() *TemplateData {
 	return &TemplateData{
-		temp:			make(map[string]*oz.Template),
+		temp:			make(map[string]*proto.Template),
 		checkSumTemp:	"",
 		lock:			new(sync.RWMutex),
 	}
@@ -156,7 +156,7 @@ func (t *TemplateData) LoadTableS3(bucket, path string) error {
 func (t *TemplateData) loadTemplate(table [][]string, sheet string) error {
 	t.lock.Lock()
 	defer t.lock.Unlock()
-	tempTable := make(map[string]*oz.Template)
+	tempTable := make(map[string]*proto.Template)
 	for index, col := range table {
 		// header skip
 		if index < HEADER_ROW_COUNT {
@@ -178,15 +178,15 @@ func (t *TemplateData) loadTemplate(table [][]string, sheet string) error {
 			return err
 		}
 
-		templateEnum := oz.TemplateEnum_T(oz.TemplateEnum_T_value[col[Inc(&i)]])
-		if templateEnum == oz.TemplateEnum_NONE || templateEnum == oz.TemplateEnum_MAX {
+		templateEnum := proto.TemplateEnum_T(proto.TemplateEnum_T_value[col[Inc(&i)]])
+		if templateEnum == proto.TemplateEnum_NONE || templateEnum == proto.TemplateEnum_MAX {
 			log.Println(col)
 			err = errors.New("enum range over")
 			TableLoadErr(sheet, table[4][i - 1], index, i, err)
 			return err
 		}
 
-		tempTable[id] = &oz.Template{
+		tempTable[id] = &proto.Template{
 			Id:			id,
 			GroupId: 	groupId,
 			RewardId:	rewardId,
@@ -200,7 +200,7 @@ func (t *TemplateData) loadTemplate(table [][]string, sheet string) error {
 	return nil
 }
 
-func (t *TemplateData) FindTemplate(id string) (*oz.Template, error) {
+func (t *TemplateData) FindTemplate(id string) (*proto.Template, error) {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 
