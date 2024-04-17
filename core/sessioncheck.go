@@ -195,7 +195,7 @@ func SessionCheck(c *gin.Context) {
 		return
 	}
 
-	if uid == "macovill_admin" {
+	if uid == "admin" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"errMsg": "authorization key is admin",
 		})
@@ -258,7 +258,7 @@ func SessionCheckAndShardIndex(c *gin.Context) {
 		return
 	}
 
-	if uid == "macovill_admin" {
+	if uid == "admin" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"errMsg": "authorization key is admin",
 		})
@@ -333,7 +333,7 @@ func SessionCheckAndShardIndexProcCheck(c *gin.Context) {
 		return
 	}
 
-	if uid == "macovill_admin" {
+	if uid == "admin" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"errMsg": "authorization key is admin",
 		})
@@ -408,7 +408,7 @@ func SessionCheckForAdmin(c *gin.Context) {
 		return
 	}
 
-	if uid != "macovill_admin" {
+	if uid != "admin" {
 
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"errMsg": "no authorization key",
